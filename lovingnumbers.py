@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-# encoding: UTF-8
 
 """Een rekenspelletje over verliefde getallen"""
 
