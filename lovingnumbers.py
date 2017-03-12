@@ -38,8 +38,8 @@ class Game(object):
 
         print("{greet} {name}!\n".format(**dict({
                 "greet": random.choice([
-                    "Welkom", "Hoi", "Hallo", "Dag", "Hé", "Ha die"
-                ]),
+                    "welkom", "hoi", "hallo", "dag", "hé", "ha die"
+                ]).capitalize()
             }, **self._props
         )))
 
@@ -143,8 +143,8 @@ class LovingNumbers(Game):
         if number == self.answer:
             print("\nDat is goed. {type} hoor!".format(**dict({
                     "type": random.choice([
-                        "Knap", "Slim", "Mooi", "Gaaf", "Leuk"
-                    ])
+                        "knap", "slim", "mooi", "gaaf", "leuk"
+                    ]).capitalize()
                 }, **self._props
             )))
 
@@ -152,8 +152,8 @@ class LovingNumbers(Game):
         else:
             print("\nDat is niet goed. {comment}!".format(**dict({
                     "comment": random.choice([
-                        "Zet 'm op", "Kom op", "Blijven proberen"
-                    ])
+                        "zet 'm op", "kom op", "blijven proberen"
+                    ]).capitalize()
                 }, **self._props
             )))
             print((
@@ -167,10 +167,13 @@ class LovingNumbers(Game):
             self.wrong += 1
 
     def _show_goodbye(self):
-        print("Tot {wish} {name}!\n".format(**dict({
+        print("Tot {wish} {name}. {goodbye}!\n".format(**dict({
                 "wish": random.choice([
                     "snel", "gauw", "ziens", "kijk"
-                ])
+                ]),
+                "goodbye": random.choice([
+                    "doei", "doeg", "dag", "houdoe"
+                ]).capitalize()
             }, **self._props
         )))
 
