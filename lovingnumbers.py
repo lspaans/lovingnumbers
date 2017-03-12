@@ -57,7 +57,7 @@ class Game(object):
         return self._props["rounds"]
 
 
-class VerliefdeGetallen(Game):
+class LovingNumbers(Game):
 
     def __init__(self, rounds=10):
         super().__init__(rounds)
@@ -257,7 +257,7 @@ class VerliefdeGetallen(Game):
 
 
 def main():
-    VerliefdeGetallen().start()
+    LovingNumbers().start()
 
 
 if __name__ == "__main__":
