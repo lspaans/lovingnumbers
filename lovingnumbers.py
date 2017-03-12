@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
-"""Een rekenspelletje over verliefde getallen"""
+"""A kids game intended for learning addition of integer numbers"""
 
-import locale
-import math
 import random
 import sys
 
@@ -12,9 +10,12 @@ __date__ = "2017-03-12"
 __version__ = "0.1.0"
 
 
-class Game(object):
-
+class _Game(object):
+    """An interface-like class for Games"""
     def __init__(self, rounds=10):
+        """
+        Arguments:
+        """
         self._props = {
             "round_number": 1,
             "rounds": rounds
@@ -23,12 +24,18 @@ class Game(object):
         self._init_game()
 
     def _init_game(self):
+        """
+        Arguments:
+        """
         try:
             self._init_name()
         except KeyboardInterrupt:
             sys.exit("")
 
     def _init_name(self):
+        """
+        Arguments:
+        """
         name = ""
 
         while name == "":
@@ -45,18 +52,27 @@ class Game(object):
 
     @property
     def round_number(self):
+        """
+        Arguments:
+        """
         return self._props["round_number"]
 
     @round_number.setter
     def round_number(self, round_number):
+        """
+        Arguments:
+        """
         self._props["round_number"] = round_number
 
     @property
     def rounds(self):
+        """
+        Arguments:
+        """
         return self._props["rounds"]
 
 
-class LovingNumbers(Game):
+class LovingNumbers(_Game):
 
     def __init__(self, rounds=10):
         super().__init__(rounds)
@@ -70,12 +86,18 @@ class LovingNumbers(Game):
         })
 
     def _do_round(self):
+        """
+        Arguments:
+        """
         self.answer = ""
         self.number_a = self._get_number()
         self.number_b = self.maximum - self.number_a
         self.variable = random.choice(["a", "b"])
 
-        print("\n{round_number}e ronde: {a} + {b} = {maximum}".format(**dict({
+        print((
+                "\n{round_number}e ronde ({right} goed/{wrong} fout): " +
+                "{a} + {b} = {maximum}"
+            ).format(**dict({
                 "a": self.number_a if self.variable == "b" else "?",
                 "b": self.number_b if self.variable == "a" else "?"
             }, **self._props
@@ -91,6 +113,9 @@ class LovingNumbers(Game):
         self.round_number += 1
 
     def _get_comment(self):
+        """
+        Arguments:
+        """
         comments = [
             "Jammer! Volgende keer beter!",
             "Als je veel oefent word je vanzelf beter!",
@@ -109,11 +134,17 @@ class LovingNumbers(Game):
         ]
 
     def _get_number(self):
+        """
+        Arguments:
+        """
         return self._props["numbers"].pop(
             random.choice(range(len(self._props["numbers"])))
         )
 
     def _init_maximum(self):
+        """
+        Arguments:
+        """
         maximum = ""
 
         while not maximum.isdigit() or int(maximum) < 10:
@@ -131,6 +162,9 @@ class LovingNumbers(Game):
         )))
 
     def _main_loop(self):
+        """
+        Arguments:
+        """
         try:
             while self.round_number <= self.rounds:
                 self._do_round()
@@ -138,6 +172,9 @@ class LovingNumbers(Game):
             print("\nTot de volgende keer!")
 
     def _process_score(self):
+        """
+        Arguments:
+        """
         number = self.number_a if self.variable == "a" else self.number_b
 
         if number == self.answer:
@@ -161,12 +198,15 @@ class LovingNumbers(Game):
                     "{number_a} + {number_b} = {maximum}"
                 ).format(**dict({
                     "number": number
-                }, **self._props
-            )))
+                }, **self._props)
+            ))
 
             self.wrong += 1
 
     def _show_goodbye(self):
+        """
+        Arguments:
+        """
         print("Tot {wish} {name}. {goodbye}!\n".format(**dict({
                 "wish": random.choice([
                     "snel", "gauw", "ziens", "kijk"
@@ -178,24 +218,31 @@ class LovingNumbers(Game):
         )))
 
     def _show_statistics(self):
-        print(
-            (
+        """
+        Arguments:
+        """
+        print((
                 "\nDat was het!\n\nJe hebt {right} antwoord{rmul} goed " +
                 "en {wrong} antwoord{wmul} fout.\n\n{comment}\n"
-                ).format(**dict({
-                    "comment": self._get_comment(),
-                    "rmul": "en" if self.right != 1 else "",
-                    "wmul": "en" if self.wrong != 1 else ""
-                }, **self._props
-        )))
-
+            ).format(**dict({
+                "comment": self._get_comment(),
+                "rmul": "en" if self.right != 1 else "",
+                "wmul": "en" if self.wrong != 1 else ""
+            }, **self._props))
+        )
 
     def _show_welcome(self):
+        """
+        Arguments:
+        """
         print("\nWe gaan beginnen! Er zijn {rounds} ronden.".format(
             **self._props
         ))
 
     def start(self):
+        """
+        Arguments:
+        """
         self._show_welcome()
         self._main_loop()
         self._show_statistics()
@@ -203,62 +250,107 @@ class LovingNumbers(Game):
 
     @property
     def answer(self):
+        """
+        Arguments:
+        """
         return self._props["answer"]
 
     @answer.setter
     def answer(self, answer):
+        """
+        Arguments:
+        """
         self._props["answer"] = answer
 
     @property
     def maximum(self):
+        """
+        Arguments:
+        """
         return self._props["maximum"]
 
     @maximum.setter
     def maximum(self, maximum):
+        """
+        Arguments:
+        """
         self._props["maximum"] = maximum
 
     @property
     def number_a(self):
+        """
+        Arguments:
+        """
         return self._props["number_a"]
 
     @number_a.setter
     def number_a(self, number_a):
+        """
+        Arguments:
+        """
         self._props["number_a"] = number_a
 
     @property
     def number_b(self):
+        """
+        Arguments:
+        """
         return self._props["number_b"]
 
     @number_b.setter
     def number_b(self, number_b):
+        """
+        Arguments:
+        """
         self._props["number_b"] = number_b
 
     @property
     def right(self):
+        """
+        Arguments:
+        """
         return self._props["right"]
 
     @right.setter
     def right(self, right):
+        """
+        Arguments:
+        """
         self._props["right"] = right
 
     @property
     def variable(self):
+        """
+        Arguments:
+        """
         return self._props["variable"]
 
     @variable.setter
     def variable(self, variable):
+        """
+        Arguments:
+        """
         self._props["variable"] = variable
 
     @property
     def wrong(self):
+        """
+        Arguments:
+        """
         return self._props["wrong"]
 
     @wrong.setter
     def wrong(self, wrong):
+        """
+        Arguments:
+        """
         self._props["wrong"] = wrong
 
 
 def main():
+    """
+    Arguments:
+    """
     LovingNumbers().start()
 
 
