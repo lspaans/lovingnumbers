@@ -26,8 +26,7 @@ class Game(object):
         try:
             self._init_name()
         except KeyboardInterrupt:
-            print()
-            sys.exit(0)
+            sys.exit("")
 
     def _init_name(self):
         name = ""
