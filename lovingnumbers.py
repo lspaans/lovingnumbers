@@ -38,7 +38,7 @@ class Game(object):
 
         print("{greet} {name}!\n".format(**dict({
                 "greet": random.choice([
-                    "Welkom", "Hoi", "Hallo", "Dag", "Leuk"
+                    "Welkom", "Hoi", "Hallo", "Dag", "Hé", "Ha die"
                 ]),
             }, **self._props
         )))
