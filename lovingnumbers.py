@@ -125,7 +125,6 @@ class LovingNumbers(_Game):
             "Blijven proberen!",
             "Goed geprobeerd!",
             "Je doet je best, maar het moet nog wat beter",
-            "Je doet je best, maar het moet nog wat beter",
             "Je hebt bijna een voldoende!",
             "Mooi hoor! Een voldoende!",
             "Fijn! Dat is een mooi resultaat",
