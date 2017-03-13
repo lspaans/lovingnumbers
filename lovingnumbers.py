@@ -46,20 +46,13 @@ class _Game(object):
 
         self.name = name.capitalize()
 
-        print("{greet} {name}!\n".format(**dict({
+        print("{greet} {name}!\n".format(
+            **dict({
                 "greet": random.choice([
                     "welkom", "hoi", "hallo", "dag", "hé", "ha die"
                 ]).capitalize()
-            }, **self._props)
+                }, **self.__dict__)
         ))
-
-    @property
-    def _props(self):
-        return {
-            "name": self.name,
-            "round_number": self.round_number,
-            "rounds": self.rounds
-        }
 
 
 class LovingNumbers(_Game):
@@ -76,12 +69,15 @@ class LovingNumbers(_Game):
 
         self.answer = ""
         self.maximum = 0
-        self.numbers = list(range(self.maximum))
+        self.number_a = 0
+        self.number_b = 0
         self.right = 0
         self.variable = ""
         self.wrong = 0
 
         self._init_maximum()
+
+        self.numbers = list(range(self.maximum))
 
     def _do_round(self):
         """
@@ -104,14 +100,15 @@ class LovingNumbers(_Game):
         """
         answer = ""
 
-        print((
+        print(
+            (
                 "\n{round_number}e ronde ({right} goed/{wrong} fout): " +
                 "{a} + {b} = {maximum}"
             ).format(**dict({
                 "a": self.number_a if self.variable == "b" else "?",
                 "b": self.number_b if self.variable == "a" else "?"
-            }, **self._props)
-        ))
+            }, **self.__dict__))
+        )
 
         while not answer.isdigit():
             answer = input("Wat is het antwoord: ")
@@ -127,6 +124,7 @@ class LovingNumbers(_Game):
             "Als je veel oefent word je vanzelf beter!",
             "Blijven proberen!",
             "Goed geprobeerd!",
+            "Je doet je best, maar het moet nog wat beter",
             "Je doet je best, maar het moet nog wat beter",
             "Je hebt bijna een voldoende!",
             "Mooi hoor! Een voldoende!",
@@ -160,12 +158,13 @@ class LovingNumbers(_Game):
 
         self.maximum = int(maximum)
 
-        print("{maximum} is een {type} keuze!".format(**dict({
+        print("{maximum} is een {type} keuze!".format(
+            **dict({
                 "type": random.choice([
                     "mooie", "slimme", "prima", "goeie", "top"
                 ]),
-            }, **self._props
-        )))
+            }, **self.__dict__)
+        ))
 
     def _main_loop(self):
         """
@@ -184,71 +183,60 @@ class LovingNumbers(_Game):
         number = self.number_a if self.variable == "a" else self.number_b
 
         if number == self.answer:
-            print("\nDat is goed. {type} hoor!".format(**dict({
+            print("\nDat is goed. {type} hoor!".format(
+                **dict({
                     "type": random.choice([
                         "knap", "slim", "mooi", "gaaf", "leuk"
                     ]).capitalize()
-                }, **self._props
-            )))
+                }, **self.__dict__)
+            ))
 
             self.right += 1
         else:
-            print("\nDat is niet goed. {comment}!".format(**dict({
+            print("\nDat is niet goed. {comment}!".format(
+                **dict({
                     "comment": random.choice([
                         "zet 'm op", "kom op", "blijven proberen"
                     ]).capitalize()
-                }, **self._props
-            )))
-            print((
+                }, **self.__dict__)
+            ))
+            print(
+                (
                     "Het goede antwoord is {number} want " +
                     "{number_a} + {number_b} = {maximum}"
-                ).format(**dict({
-                    "number": number
-                }, **self._props)
-            ))
+                ).format(**dict({"number": number}, **self.__dict__))
+            )
 
             self.wrong += 1
-
-    @property
-    def _props(self):
-        return dict({
-                "answer": self.answer,
-                "maximum": self.maximum,
-                "number_a": self.number_a,
-                "number_b": self.number_b,
-                "numbers": self.numbers,
-                "right": self.right,
-                "variable": self.variable,
-                "wrong": self.wrong
-            }, **super()._props()
-        )
 
     def _show_goodbye(self):
         """
         Arguments:
         """
-        print("Tot {wish} {name}. {goodbye}!\n".format(**dict({
+        print("Tot {wish} {name}. {goodbye}!\n".format(
+            **dict({
                 "wish": random.choice([
                     "snel", "gauw", "ziens", "kijk"
                 ]),
                 "goodbye": random.choice([
                     "doei", "doeg", "dag", "houdoe"
                 ]).capitalize()
-            }, **self._props
-        )))
+                }, **self.__dict__)
+        ))
 
     def _show_statistics(self):
         """
         Arguments:
         """
-        print((
+        print(
+            (
                 "\nDat was het!\n\nJe hebt {right} antwoord{rmul} goed " +
                 "en {wrong} antwoord{wmul} fout.\n\n{comment}\n"
             ).format(**dict({
                 "comment": self._get_comment(),
                 "rmul": "en" if self.right != 1 else "",
                 "wmul": "en" if self.wrong != 1 else ""
-            }, **self._props))
+            }, **self.__dict__))
         )
 
     def _show_welcome(self):
@@ -256,14 +244,13 @@ class LovingNumbers(_Game):
         Arguments:
         """
         print("\nWe gaan beginnen! Er zijn {rounds} ronden.".format(
-            **self._props
+            **self.__dict__
         ))
 
     def start(self):
         """
         Arguments:
         """
-        self._show_welcome()
         self._main_loop()
         self._show_statistics()
         self._show_goodbye()
@@ -277,4 +264,8 @@ def main():
 
 
 if __name__ == "__main__":
+    """
+    The main function that is automatically called when the script itself is
+    executed.
+    """
     main()
