@@ -20,6 +20,7 @@ class _Game(object):
         Arguments:
             rounds - int(): number of rounds
         """
+        self.name = ""
         self.round_number = 1
         self.rounds = rounds
 
@@ -43,42 +44,22 @@ class _Game(object):
         while name == "":
             name = input("Wat is je naam? ")
 
-        self._props["name"] = name.capitalize()
+        self.name = name.capitalize()
 
         print("{greet} {name}!\n".format(**dict({
                 "greet": random.choice([
                     "welkom", "hoi", "hallo", "dag", "hé", "ha die"
                 ]).capitalize()
-            }, **self._props
-        )))
+            }, **self._props)
+        ))
 
     @property
-    def round_number(self):
-        """
-        Current round number.
-        """
-        return self._props["round_number"]
-
-    @round_number.setter
-    def round_number(self, round_number):
-        """
-        Sets current round number.
-        """
-        self._props["round_number"] = round_number
-
-    @property
-    def rounds(self):
-        """
-        Number of rounds in game.
-        """
-        return self._props["rounds"]
-
-    @rounds.setter
-    def rounds(self, rounds):
-        """
-        Sets number of rounds in game.
-        """
-        self._props["rounds"] = rounds
+    def _props(self):
+        return {
+            "name": self.name,
+            "round_number": self.round_number,
+            "rounds": self.rounds
+        }
 
 
 class LovingNumbers(_Game):
@@ -93,11 +74,14 @@ class LovingNumbers(_Game):
         """
         super().__init__(rounds)
 
-        self._init_maximum()
-        self._props["numbers"] = list(range(self.maximum))
         self.answer = ""
+        self.maximum = 0
+        self.numbers = list(range(self.maximum))
         self.right = 0
+        self.variable = ""
         self.wrong = 0
+
+        self._init_maximum()
 
     def _do_round(self):
         """
@@ -108,23 +92,31 @@ class LovingNumbers(_Game):
         self.number_b = self.maximum - self.number_a
         self.variable = random.choice(["a", "b"])
 
+        self.answer = self._get_answer()
+
+        self._process_score()
+
+        self.round_number += 1
+
+    def _get_answer(self):
+        """
+        Arguments:
+        """
+        answer = ""
+
         print((
                 "\n{round_number}e ronde ({right} goed/{wrong} fout): " +
                 "{a} + {b} = {maximum}"
             ).format(**dict({
                 "a": self.number_a if self.variable == "b" else "?",
                 "b": self.number_b if self.variable == "a" else "?"
-            }, **self._props
-        )))
+            }, **self._props)
+        ))
 
-        while not self.answer.isdigit():
-            self.answer = input("Wat is het antwoord: ")
+        while not answer.isdigit():
+            answer = input("Wat is het antwoord: ")
 
-        self.answer = int(self.answer)
-
-        self._process_score()
-
-        self.round_number += 1
+        return int(answer)
 
     def _get_comment(self):
         """
@@ -151,8 +143,8 @@ class LovingNumbers(_Game):
         """
         Arguments:
         """
-        return self._props["numbers"].pop(
-            random.choice(range(len(self._props["numbers"])))
+        return self.numbers.pop(
+            random.choice(range(len(self.numbers)))
         )
 
     def _init_maximum(self):
@@ -217,6 +209,20 @@ class LovingNumbers(_Game):
 
             self.wrong += 1
 
+    @property
+    def _props(self):
+        return dict({
+                "answer": self.answer,
+                "maximum": self.maximum,
+                "number_a": self.number_a,
+                "number_b": self.number_b,
+                "numbers": self.numbers,
+                "right": self.right,
+                "variable": self.variable,
+                "wrong": self.wrong
+            }, **super()._props()
+        )
+
     def _show_goodbye(self):
         """
         Arguments:
@@ -261,104 +267,6 @@ class LovingNumbers(_Game):
         self._main_loop()
         self._show_statistics()
         self._show_goodbye()
-
-    @property
-    def answer(self):
-        """
-        Arguments:
-        """
-        return self._props["answer"]
-
-    @answer.setter
-    def answer(self, answer):
-        """
-        Arguments:
-        """
-        self._props["answer"] = answer
-
-    @property
-    def maximum(self):
-        """
-        Arguments:
-        """
-        return self._props["maximum"]
-
-    @maximum.setter
-    def maximum(self, maximum):
-        """
-        Arguments:
-        """
-        self._props["maximum"] = maximum
-
-    @property
-    def number_a(self):
-        """
-        Arguments:
-        """
-        return self._props["number_a"]
-
-    @number_a.setter
-    def number_a(self, number_a):
-        """
-        Arguments:
-        """
-        self._props["number_a"] = number_a
-
-    @property
-    def number_b(self):
-        """
-        Arguments:
-        """
-        return self._props["number_b"]
-
-    @number_b.setter
-    def number_b(self, number_b):
-        """
-        Arguments:
-        """
-        self._props["number_b"] = number_b
-
-    @property
-    def right(self):
-        """
-        Arguments:
-        """
-        return self._props["right"]
-
-    @right.setter
-    def right(self, right):
-        """
-        Arguments:
-        """
-        self._props["right"] = right
-
-    @property
-    def variable(self):
-        """
-        Arguments:
-        """
-        return self._props["variable"]
-
-    @variable.setter
-    def variable(self, variable):
-        """
-        Arguments:
-        """
-        self._props["variable"] = variable
-
-    @property
-    def wrong(self):
-        """
-        Arguments:
-        """
-        return self._props["wrong"]
-
-    @wrong.setter
-    def wrong(self, wrong):
-        """
-        Arguments:
-        """
-        self._props["wrong"] = wrong
 
 
 def main():
