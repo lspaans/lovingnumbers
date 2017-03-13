@@ -6,26 +6,28 @@ import random
 import sys
 
 __author__ = "Léon Spaans"
-__date__ = "2017-03-12"
+__date__ = "2017-03-13"
 __version__ = "0.1.0"
 
 
 class _Game(object):
-    """An interface-like class for Games"""
+    """An interface-like class for games"""
+
     def __init__(self, rounds=10):
         """
+        Constructor method.
+
         Arguments:
+            rounds - int(): number of rounds
         """
-        self._props = {
-            "round_number": 1,
-            "rounds": rounds
-        }
+        self.round_number = 1
+        self.rounds = rounds
 
         self._init_game()
 
     def _init_game(self):
         """
-        Arguments:
+        Initializes the game.
         """
         try:
             self._init_name()
@@ -34,7 +36,7 @@ class _Game(object):
 
     def _init_name(self):
         """
-        Arguments:
+        Initializes the player name from keyboard.
         """
         name = ""
 
@@ -53,41 +55,53 @@ class _Game(object):
     @property
     def round_number(self):
         """
-        Arguments:
+        Current round number.
         """
         return self._props["round_number"]
 
     @round_number.setter
     def round_number(self, round_number):
         """
-        Arguments:
+        Sets current round number.
         """
         self._props["round_number"] = round_number
 
     @property
     def rounds(self):
         """
-        Arguments:
+        Number of rounds in game.
         """
         return self._props["rounds"]
 
+    @rounds.setter
+    def rounds(self, rounds):
+        """
+        Sets number of rounds in game.
+        """
+        self._props["rounds"] = rounds
+
 
 class LovingNumbers(_Game):
+    """A kids game intended for learning addition of integer numbers"""
 
     def __init__(self, rounds=10):
+        """
+        Constuctor method.
+
+        Arguments:
+            rounds - int(): number of rounds
+        """
         super().__init__(rounds)
 
         self._init_maximum()
-        self._props.update({
-            "numbers": list(range(self.maximum)),
-            "answer": "",
-            "right": 0,
-            "wrong": 0
-        })
+        self._props["numbers"] = list(range(self.maximum))
+        self.answer = ""
+        self.right = 0
+        self.wrong = 0
 
     def _do_round(self):
         """
-        Arguments:
+        Starts next round.
         """
         self.answer = ""
         self.number_a = self._get_number()
