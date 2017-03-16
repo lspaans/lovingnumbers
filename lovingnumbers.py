@@ -63,7 +63,7 @@ class LovingNumbers(_Game):
         Constuctor method.
 
         Arguments:
-            rounds - int(): number of rounds
+            rounds - int(): number of rounds (default: 10)
         """
         super().__init__(rounds)
 
@@ -96,7 +96,9 @@ class LovingNumbers(_Game):
 
     def _get_answer(self):
         """
-        Arguments:
+        Gets player answer from keyboard.
+
+        Returns int() with player answer.
         """
         answer = ""
 
@@ -117,7 +119,9 @@ class LovingNumbers(_Game):
 
     def _get_comment(self):
         """
-        Arguments:
+        Gets appropriate comment based on score.
+
+        Returns str() with comment.
         """
         comments = [
             "Jammer! Volgende keer beter!",
@@ -138,7 +142,9 @@ class LovingNumbers(_Game):
 
     def _get_number(self):
         """
-        Arguments:
+        Gets random number from list() with remaining numbers.
+
+        Returns int() with number.
         """
         return self.numbers.pop(
             random.choice(range(len(self.numbers)))
@@ -146,7 +152,7 @@ class LovingNumbers(_Game):
 
     def _init_maximum(self):
         """
-        Arguments:
+        Initializes players preferred maximum total from keyboard.
         """
         maximum = ""
 
