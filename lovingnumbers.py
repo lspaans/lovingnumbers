@@ -90,7 +90,7 @@ class LovingNumbers(_Game):
 
         self.answer = self._get_answer()
 
-        self._process_score()
+        self._process_answer()
 
         self.round_number += 1
 
@@ -142,7 +142,7 @@ class LovingNumbers(_Game):
 
     def _get_number(self):
         """
-        Gets random number from list() with remaining numbers.
+        Gets random entry from list() with remaining numbers.
 
         Returns int() with number.
         """
@@ -173,7 +173,7 @@ class LovingNumbers(_Game):
 
     def _main_loop(self):
         """
-        Arguments:
+        The main game loop.
         """
         try:
             while self.round_number <= self.rounds:
@@ -181,9 +181,9 @@ class LovingNumbers(_Game):
         except KeyboardInterrupt:
             print("\nTot de volgende keer!")
 
-    def _process_score(self):
+    def _process_answer(self):
         """
-        Arguments:
+        Processes the player's answer and updates the score accordingly.
         """
         number = self.number_a if self.variable == "a" else self.number_b
 
@@ -216,7 +216,7 @@ class LovingNumbers(_Game):
 
     def _show_goodbye(self):
         """
-        Arguments:
+        Shows goodbye message.
         """
         print("Tot {wish} {name}. {goodbye}!\n".format(
             **dict({
@@ -229,9 +229,9 @@ class LovingNumbers(_Game):
                 }, **self.__dict__)
         ))
 
-    def _show_statistics(self):
+    def _show_score(self):
         """
-        Arguments:
+        Shows the player's score.
         """
         print(
             (
@@ -246,7 +246,7 @@ class LovingNumbers(_Game):
 
     def _show_welcome(self):
         """
-        Arguments:
+        Shows welcome message.
         """
         print("\nWe gaan beginnen! Er zijn {rounds} ronden.".format(
             **self.__dict__
@@ -254,23 +254,19 @@ class LovingNumbers(_Game):
 
     def start(self):
         """
-        Arguments:
+        Starts the game.
         """
         self._main_loop()
-        self._show_statistics()
+        self._show_score()
         self._show_goodbye()
 
 
 def main():
     """
-    Arguments:
+    The main function; executes when script is started directly.
     """
     LovingNumbers().start()
 
 
 if __name__ == "__main__":
-    """
-    The main function that is automatically called when the script itself is
-    executed.
-    """
     main()
